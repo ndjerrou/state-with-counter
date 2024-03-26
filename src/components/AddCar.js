@@ -1,39 +1,42 @@
 import { useState } from 'react';
 
 const AddCar = () => {
-  const [model, setModel] = useState('');
-  const [motorisation, setMotorisation] = useState('');
-  const [miles, setMiles] = useState(0);
+  const [formData, setFormData] = useState({
+    model: '',
+    motorisation: '',
+    miles: 0,
+  });
 
-  const handleModelCar = e => {
-    setModel(e.target.value);
-  };
+  console.log(formData);
 
-  const handleMotorisation = e => {
-    setMotorisation(e.target.value);
-  };
+  const handleChange = e => {
+    const { name } = e.target;
 
-  const handleMiles = e => {
-    setMiles(e.target.value);
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: e.target.value,
+    }));
   };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    console.log(model);
-    console.log(motorisation);
-    console.log(miles);
+    console.log(formData.model);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label>Modèle :</label>
-        <input value={model} onChange={handleModelCar} />
+        <input name='model' value={formData.model} onChange={handleChange} />
       </div>
       <div>
         <label>Motorisation : </label>
-        <select value={motorisation} onChange={handleMotorisation}>
+        <select
+          name='motorisation'
+          value={formData.motorisation}
+          onChange={handleChange}
+        >
           <option>--Choisissez une motorisation--</option>
           <option value='Diesel'>Diesel</option>
           <option value='Essence'>Essence</option>
@@ -41,7 +44,16 @@ const AddCar = () => {
       </div>
       <div>
         <label>KM : </label>
-        <input type='number' value={miles} onChange={handleMiles} />
+        <input
+          name='miles'
+          type='number'
+          value={formData.miles}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Etat neuf ?</label>
+        <input type='checkbox' />
       </div>
       <button>Ajouter ma voiture</button>
     </form>
