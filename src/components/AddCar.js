@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 const AddCar = () => {
+  const modelRef = useRef({});
+
   const [formData, setFormData] = useState({
     model: '',
     motorisation: '',
@@ -22,6 +24,8 @@ const AddCar = () => {
     model.length >= 4 && miles > 0 && motorisation ? false : true;
 
   const handleChange = e => {
+    // get the value of model input
+    console.log(modelRef.current.value);
     const { name } = e.target;
 
     setFormData(prevState => ({
@@ -43,7 +47,12 @@ const AddCar = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label>Modèle :</label>
-        <input name='model' value={formData.model} onChange={handleChange} />
+        <input
+          ref={modelRef}
+          name='model'
+          value={formData.model}
+          onChange={handleChange}
+        />
       </div>
       <div>
         <label>Motorisation : </label>
