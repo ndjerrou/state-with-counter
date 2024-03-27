@@ -5,6 +5,7 @@ const AddCar = () => {
     model: '',
     motorisation: '',
     miles: 0,
+    isNew: false,
   });
 
   console.log(formData);
@@ -12,16 +13,21 @@ const AddCar = () => {
   const handleChange = e => {
     const { name } = e.target;
 
+    console.log(e.target.value);
+
     setFormData(prevState => ({
       ...prevState,
-      [name]: e.target.value,
+      [name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
     }));
   };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    console.log(formData.model);
+    console.log(formData);
+
+    if (formData.isNew) console.log('la voiture est neuve');
+    else console.log('voiture occasion');
   };
 
   return (
@@ -53,7 +59,12 @@ const AddCar = () => {
       </div>
       <div>
         <label>Etat neuf ?</label>
-        <input type='checkbox' />
+        <input
+          name='isNew'
+          type='checkbox'
+          checked={formData.isNew}
+          onChange={handleChange}
+        />
       </div>
       <button>Ajouter ma voiture</button>
     </form>
