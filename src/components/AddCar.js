@@ -8,12 +8,21 @@ const AddCar = () => {
     isNew: false,
   });
 
-  console.log(formData);
+  //   const [disabled, setDisabled] = useState(true);
+
+  const { model, motorisation, miles } = formData;
+
+  // don't update state inside a if statement !!
+
+  //   if (model.length >= 4 && miles > 0 && motorisation) {
+  //     setDisabled(false);
+  //   }
+
+  const disabled =
+    model.length >= 4 && miles > 0 && motorisation ? false : true;
 
   const handleChange = e => {
     const { name } = e.target;
-
-    console.log(e.target.value);
 
     setFormData(prevState => ({
       ...prevState,
@@ -66,7 +75,12 @@ const AddCar = () => {
           onChange={handleChange}
         />
       </div>
-      <button>Ajouter ma voiture</button>
+      {/* @TODO : enable the button if we have some values inside the formula : 
+        model ==> min 4 characters length
+        motorisation ==> pick one motorisation (a real one !)
+        km > 0
+      */}
+      <button disabled={disabled}>Ajouter ma voiture</button>
     </form>
   );
 };
